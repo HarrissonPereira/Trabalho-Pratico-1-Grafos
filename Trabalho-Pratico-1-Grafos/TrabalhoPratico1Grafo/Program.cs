@@ -24,7 +24,7 @@ namespace TrabalhoPratico1Grafo
                 int escolha = EscolhaMenu();
                 ExecutaOpcao(ref grafo, escolha);
 
-                Console.Write("Deseja fazer mais alguma coisa? \n1 - Sim \n2 - Não \nEscolha:")
+                Console.Write("Deseja fazer mais alguma coisa? \n1 - Sim \n2 - Não \nEscolha:");
                 executar = int.Parse(Console.ReadLine());
 
             }
@@ -163,7 +163,7 @@ namespace TrabalhoPratico1Grafo
                 break;
 
                 default:
-                    Console.Write("Nenhuma opção válida escolhida.")
+                    Console.Write("Nenhuma opção válida escolhida.");
                 break;
 
             }

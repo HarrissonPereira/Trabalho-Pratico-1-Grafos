@@ -147,7 +147,18 @@ namespace TrabalhoPratico1Grafo
         public bool Regular()
         {
             /*Pegar o grau do primeiro vértice, percorrer a lista verificando se todos os vértices possuem o grau igual ao 1º*/
+            foreach (Vertice item in verticesDoGrafo)
+                auxGrau.Add(item.Grau);
 
+            int compVar = auxGrau.First<int>();
+
+            foreach (int i in auxGrau)
+            {
+                if (compVar != i)
+                {
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -157,20 +168,20 @@ namespace TrabalhoPratico1Grafo
             Console.Write("\t");
 
             for(int i = 0; i < qtVertices; i++){
-                Console.Write("v"+i+1+"\t")
+                Console.Write("v" + i + 1 + "\t");
             }
 
             for(int indiceY = 0; indiceY < qtVertices.GetLenght(1); indiceY++){
 
-                Console.Write("v" + indiceY+1+"\t")
+                Console.Write("v" + indiceY + 1 + "\t");
 
                 for(indiceX = 0; indiceY < qtVertices.GetLenght(0); indiceY++){
                     if(MA[indiceX,indiceY].IsLigado()){
-                        Console.Write("1\t")
+                        Console.Write("1\t");
                     }
                     else
                     {
-                        Console.Write("0\t")
+                        Console.Write("0\t");
                     }
                 }
 
@@ -227,8 +238,8 @@ namespace TrabalhoPratico1Grafo
         public void NomesVertices()
         {
 
-            foreach(Vertice vertice in verticesDoGrafo)
-                Console.Write(vertice.Nome + " ")
+            foreach (Vertice vertice in verticesDoGrafo)
+                Console.Write(vertice.Nome + " ");
 
             Console.WriteLine();
 
