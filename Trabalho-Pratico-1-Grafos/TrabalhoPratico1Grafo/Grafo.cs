@@ -9,24 +9,44 @@ namespace TrabalhoPratico1Grafo
     class Grafo
     {
 
-        private int[,] MA;
+        //private int[,] MA;
         private int qtVertices;
+        private Aresta[,] MA;        
         private List<Vertice> verticesDoGrafo;
 
-
         //Construtora: Inicializa a matriz de adjacência pelo tamanho nxn, onde n é a quantidade de vértices passada como parâmetro
-        public Grafo (int qtVertices)
+        public Grafo (int qtdeVertices)
         {
-
-            this.qtVertices = qtVertices;
-
-            MA = new int[qtVertices, qtVertices];            
-            
+            this.qtVertices = qtdeVertices; 
 
             //colocando os vértices no Grafo
             verticesDoGrafo = new List<Vertice>();            
             for (int indice = 0; indice < qtVertices; indice++)
-                verticesDoGrafo.Add(new Vertice(indice+1));
+                verticesDoGrafo.Add(new Vertice(indice+1));        
+
+            MA = new Aresta[qtVertices,qtVertices];
+
+            //Inicializando a MA com os vértices posicionados de forma correta
+            for(int indiceY = 0; indiceY < qtVertices.GetLenght(1); indiceY++){
+                for(indiceX = 0; indiceY < qtVertices.GetLenght(0); indiceY++){
+
+                    Vertice v1;
+                    Vertice v2;
+
+                    foreach(Vertice vertice in verticesDoGrafo)
+                        if(vertice.Nome == indiceY+ 1)
+                            v1 = vertice;
+                    
+                    foreach(Vertice vertice in verticesDoGrafo)
+                        if(vertice.Nome == indiceX+ 1)
+                            v2 = vertice;
+
+                    MA[indiceX,indiceY] = new Aresta(v1, v2);
+
+                }
+
+            }           
+            
         }
 
 
@@ -39,7 +59,7 @@ namespace TrabalhoPratico1Grafo
         //Insere aresta entre os vértices passados como parâmetro
         public bool InserirAresta(Vertice v1, Vertice v2)
         {
-            /*CUIADOS AO INSERIR UMA ARESTA:
+            /*CUIDADOS AO INSERIR UMA ARESTA:
             1 - Verificar se os dois vértices do parâmetro estão presentes no grafo
             2 - Verificar se não há nenhuma aresta já inserida entre esses vértices
             */
@@ -55,6 +75,8 @@ namespace TrabalhoPratico1Grafo
 
                     v2.ListaAdjacencia.Add(v1);
                     v2.Grau++;
+
+                    MA[(v1.Nome-1),(v2.Nome-1)].SetLigado(true);
 
                     return true;
                 }
@@ -80,6 +102,8 @@ namespace TrabalhoPratico1Grafo
                     v2.ListaAdjacencia.Remove(v1);
                     v2.Grau--;
 
+                    MA[(v1.Nome-1),(v2.Nome-1)].SetLigado(false);
+
                     return true;
                 }
 
@@ -89,9 +113,17 @@ namespace TrabalhoPratico1Grafo
         }
 
         //Retorna a quantidade de graus presente no vértice passado como parâmetro
-        public int Grau(Vertice vertice)
+        public int Grau(int vertice)
         {
-            return vertice.Grau;
+
+            foreach(Vertice item in verticesDoGrafo)
+            {
+                if(item.Nome == vertice)
+                {
+                    return item.Grau; 
+                }
+            }
+            return null;
         }
 
         //Verifica se o Grafo está com sua ligação máxima de vertices
@@ -122,7 +154,28 @@ namespace TrabalhoPratico1Grafo
         //Mostra a Matriz de Adjacência do Grafo
         public void ShowMA()
         {
-            Console.WriteLine(MA);
+            Console.Write("\t");
+
+            for(int i = 0; i < qtVertices; i++){
+                Console.Write("v"+i+1+"\t")
+            }
+
+            for(int indiceY = 0; indiceY < qtVertices.GetLenght(1); indiceY++){
+
+                Console.Write("v" + indiceY+1+"\t")
+
+                for(indiceX = 0; indiceY < qtVertices.GetLenght(0); indiceY++){
+                    if(MA[indiceX,indiceY].IsLigado()){
+                        Console.Write("1\t")
+                    }
+                    else
+                    {
+                        Console.Write("0\t")
+                    }
+                }
+
+                Console.WriteLine();
+            }
         }
 
         //Mostra a Lista de Adjacências do Grafo
@@ -168,6 +221,21 @@ namespace TrabalhoPratico1Grafo
         public bool Adjacentes(Vertice v1, Vertice v2)
         {
             return true;
+        }
+
+        //UTILS
+        public void NomesVertices()
+        {
+
+            foreach(Vertice vertice in verticesDoGrafo)
+                Console.Write(vertice.Nome + " ")
+
+            Console.WriteLine();
+
+        }
+
+        public List<Vertice> GetVertices(){
+            return verticesDoGrafo;
         }
 
     }
