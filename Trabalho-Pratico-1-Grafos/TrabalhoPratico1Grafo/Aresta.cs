@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,28 +25,35 @@ namespace TrabalhoPratico1Grafo
 
 
         //GETTERS E SETTERS
-        public Vertice GetV1(){
+        public Vertice GetV1()
+        {
             return v1;
         }
-        public void SetV1(Vertice valor){
+        public void SetV1(Vertice valor)
+        {
             this.v1 = valor;
         }
 
 
-        public Vertice GetV2(){
+        public Vertice GetV2()
+        {
             return v2;
         }
-        public void SetV2(Vertice valor){
+        public void SetV2(Vertice valor)
+        {
             this.v2 = valor;
         }
 
 
-        public bool IsLigado(){
+        public bool IsLigado()
+        {
             return isLigado;
         }
-        public void SetLigado(bool valor){
+        public void SetLigado(bool valor)
+        {
             this.isLigado = valor;
         }
     }
-    
+
 }
+

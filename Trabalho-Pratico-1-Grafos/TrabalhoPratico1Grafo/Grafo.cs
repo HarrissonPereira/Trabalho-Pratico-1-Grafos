@@ -27,11 +27,11 @@ namespace TrabalhoPratico1Grafo
             MA = new Aresta[qtVertices,qtVertices];
 
             //Inicializando a MA com os vértices posicionados de forma correta
-            for(int indiceY = 0; indiceY < qtVertices.GetLenght(1); indiceY++){
-                for(indiceX = 0; indiceY < qtVertices.GetLenght(0); indiceY++){
+            for(int indiceY = 0; indiceY < MA.GetLength(1); indiceY++){
+                for(int indiceX = 0; indiceY < MA.GetLength(0); indiceY++){
 
-                    Vertice v1;
-                    Vertice v2;
+                    Vertice v1 = new Vertice(1);
+                    Vertice v2 = new Vertice(1);
 
                     foreach(Vertice vertice in verticesDoGrafo)
                         if(vertice.Nome == indiceY+ 1)
@@ -123,7 +123,7 @@ namespace TrabalhoPratico1Grafo
                     return item.Grau; 
                 }
             }
-            return null;
+            return 0;
         }
 
         //Verifica se o Grafo está com sua ligação máxima de vertices
@@ -146,6 +146,7 @@ namespace TrabalhoPratico1Grafo
         //Verifica se todos os vértices possuem a mesma quantidade de graus
         public bool Regular()
         {
+            List<int> auxGrau = new List<int>();
             /*Pegar o grau do primeiro vértice, percorrer a lista verificando se todos os vértices possuem o grau igual ao 1º*/
             foreach (Vertice item in verticesDoGrafo)
                 auxGrau.Add(item.Grau);
@@ -171,11 +172,11 @@ namespace TrabalhoPratico1Grafo
                 Console.Write("v" + i + 1 + "\t");
             }
 
-            for(int indiceY = 0; indiceY < qtVertices.GetLenght(1); indiceY++){
+            for(int indiceY = 0; indiceY < MA.GetLength(1); indiceY++){
 
                 Console.Write("v" + indiceY + 1 + "\t");
 
-                for(indiceX = 0; indiceY < qtVertices.GetLenght(0); indiceY++){
+                for(int indiceX = 0; indiceY < MA.GetLength(0); indiceY++){
                     if(MA[indiceX,indiceY].IsLigado()){
                         Console.Write("1\t");
                     }
@@ -245,8 +246,15 @@ namespace TrabalhoPratico1Grafo
 
         }
 
-        public List<Vertice> GetVertices(){
-            return verticesDoGrafo;
+        public Vertice GetVertice(int nome){
+
+            foreach (Vertice item in verticesDoGrafo)
+            {
+                if (item.Nome == nome)
+                    return item;
+            }
+
+            return null;
         }
 
     }

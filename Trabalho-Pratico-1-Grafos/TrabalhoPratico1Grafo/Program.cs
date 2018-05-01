@@ -50,7 +50,8 @@ namespace TrabalhoPratico1Grafo
             Console.WriteLine("13 - Par?");
             Console.WriteLine("14 - Verificar se há adjacência entre 2 vértices");
             Console.Write("Escolha: ");
-            escolha = int.Parse(Console.ReadLine());
+            return escolha = int.Parse(Console.ReadLine());
+
 
         }
 
@@ -59,8 +60,13 @@ namespace TrabalhoPratico1Grafo
 
             Console.Clear();
 
-            switch(escolha)
+            
+            
+
+            switch (escolha)
             {
+                
+
                 case 1: //Ordem
                     Console.Write("A ordem desse grafo é: "+grafo.Ordem());
                 break;
@@ -69,12 +75,12 @@ namespace TrabalhoPratico1Grafo
                     Console.WriteLine("Escolha quais vértices deseja inserir uma aresta: ");
                     grafo.NomesVertices();
                     Console.Write("Vértice 1: ");
-                    int v1 = int.Parse(Console.ReadLine());
+                    Vertice v1 = grafo.GetVertice(int.Parse(Console.ReadLine()));
                     Console.Write("Vértice 2: ");
-                    int v2 = int.Parse(Console.ReadLine());
+                    Vertice v2 = grafo.GetVertice(int.Parse(Console.ReadLine()));
 
                     if(v1 != v2){
-                        grafo.InsereAresta(v1,v2);
+                        grafo.InserirAresta(v1,v2);
                     }else
                     {
                         Console.Write("Nesse grafo, não pode inserir arestas tipo loop.");
@@ -86,12 +92,12 @@ namespace TrabalhoPratico1Grafo
                     Console.WriteLine("Escolha quais vértices deseja remover uma aresta: ");
                     grafo.NomesVertices();
                     Console.Write("Vértice 1: ");
-                    int v1 = int.Parse(Console.ReadLine());
+                    v1 = grafo.GetVertice(int.Parse(Console.ReadLine()));
                     Console.Write("Vértice 2: ");
-                    int v2 = int.Parse(Console.ReadLine());
+                    v2 = grafo.GetVertice(int.Parse(Console.ReadLine()));
 
-                    if(v1 != v2){
-                        grafo.RemoveAresta(v1,v2);
+                    if (v1 != v2){
+                        grafo.RemoverAresta(v1,v2);
                     }else
                     {
                         Console.Write("Nesse grafo, não há arestas em loop.");
@@ -143,23 +149,23 @@ namespace TrabalhoPratico1Grafo
                 break;
 
                 case 10: //Vértices adjacentes de um vértice
-                    grafo.VerticesAdjacentes();
+                    grafo.VerticesAdjacentes(new Vertice(2));
                 break;
 
                 case 11: //Vertice isolado
-                    grafo.Isolado();
+                    grafo.Isolado(new Vertice(2));
                 break;
 
                 case 12: //Impar
-                    grafo.Par();
+                    grafo.Par(new Vertice(2));
                 break;
 
                 case 13: //Par
-                    grafo.Impar();
+                    grafo.Impar(new Vertice(2));
                 break;
 
                 case 14: //Adjacência entre 2 vértices
-                    grafo.Adjacentes();
+                    grafo.Adjacentes(new Vertice(2), new Vertice(3));
                 break;
 
                 default:
