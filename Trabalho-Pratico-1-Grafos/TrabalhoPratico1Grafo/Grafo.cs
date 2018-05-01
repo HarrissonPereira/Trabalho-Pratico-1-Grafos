@@ -201,24 +201,46 @@ namespace TrabalhoPratico1Grafo
         //Mostra a sequência de graus
         public void SequenciaGraus()
         {
-            /**/
+            List<int> auxGrau = new List<int>();
+            /*Pega o grau de cada vertice, atribui a uma lista e em seguida ajusta
+             * de forma decrescente para apresentar na tela*/
+            foreach (Vertice item in verticesDoGrafo)
+                auxGrau.Add(item.Grau);
+
+            auxGrau.Sort();
+            auxGrau.Reverse();
+
+            Console.WriteLine(auxGrau);
         }
 
         //Mostra os vértices adjacentes do vértice passado como parâmetro
         public void VerticesAdjacentes(Vertice vertice)
         {
-            /**/
+            Console.WriteLine(vertice.Nome + ": ");
+            foreach(Vertice item in vertice.ListaAdjacencia)
+            {
+                Console.WriteLine(item.Nome + ", ");
+            }
         }
 
         //Verifica se o vértice é isolado
         public bool Isolado(Vertice vertice)
         {
-            return true;
+            if (vertice.Grau != 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         //TODO: Verificar o que quer dizer com Par/Impar
         public bool Impar(Vertice vertice)
         {
+            if (vertice.Nome % 2 == 0)
+
+            {
+                return false;
+            }
             return true;
         }
 
@@ -226,13 +248,22 @@ namespace TrabalhoPratico1Grafo
         //TODO: Verificar o que quer dizer com Par/Impar
         public bool Par(Vertice vertice)
         {
+            if (vertice.Nome % 2 == 1)
+
+            {
+                return false;
+            }
             return true;
         }
 
         //Verifica se há adjacência entre os vértices passados como parâmetro
         public bool Adjacentes(Vertice v1, Vertice v2)
         {
-            return true;
+            if (v1 != v2)
+            {
+                return (MA[v1.Nome - 1, v2.Nome - 1].IsLigado());
+            }
+                return false;
         }
 
         //UTILS

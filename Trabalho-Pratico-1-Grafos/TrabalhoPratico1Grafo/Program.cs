@@ -149,23 +149,63 @@ namespace TrabalhoPratico1Grafo
                 break;
 
                 case 10: //Vértices adjacentes de um vértice
-                    grafo.VerticesAdjacentes(new Vertice(2));
+                    Console.WriteLine("Informe o vertice desejado: ");
+                    Vertice varadj = grafo.GetVertice(int.Parse(Console.ReadLine()));
+                    grafo.VerticesAdjacentes(varadj);
                 break;
 
                 case 11: //Vertice isolado
-                    grafo.Isolado(new Vertice(2));
-                break;
+                    Console.WriteLine("Informa o vertice para verificação");
+                    Vertice variso = grafo.GetVertice(int.Parse(Console.ReadLine()));
+                    if (grafo.Isolado(variso))
+                    {
+                        Console.WriteLine("Esse vertice é Isolado.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Esse vertice não é Isolado.");
+                    }
+                    break;
 
-                case 12: //Impar
-                    grafo.Par(new Vertice(2));
-                break;
+                case 12: //Par
+                    Console.WriteLine("Informe o vertice para verificação: ");
+                    Vertice varpar = grafo.GetVertice(int.Parse(Console.ReadLine()));
+                    if (grafo.Par(varpar))
+                    {
+                        Console.WriteLine("O vertice informado é Par.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("O vertice informado não é Par.");
+                    }
+                    break;
 
-                case 13: //Par
-                    grafo.Impar(new Vertice(2));
+                case 13: //Impar
+                    Console.WriteLine("Informe o vertice para verificação: ");
+                    Vertice varimpar = grafo.GetVertice(int.Parse(Console.ReadLine()));
+                    if (grafo.Impar(varimpar))
+                    {
+                        Console.WriteLine("O vertice informado é Impar.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("O vertice informado não é Impar.");
+                    }
                 break;
 
                 case 14: //Adjacência entre 2 vértices
-                    grafo.Adjacentes(new Vertice(2), new Vertice(3));
+                    Console.WriteLine("Informe o primeiro vertice para comparação:");
+                    Vertice adjV1 = grafo.GetVertice(int.Parse(Console.ReadLine()));
+                    Console.WriteLine("Informe o segundo verticce para comparação:");
+                    Vertice adjV2 = grafo.GetVertice(int.Parse(Console.ReadLine()));
+                    if (grafo.Adjacentes(adjV1, adjV2))
+                    {
+                        Console.WriteLine("Os veertices informados são adjacentes!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Os vertices informados não são adjacentes.");
+                    }
                 break;
 
                 default:
