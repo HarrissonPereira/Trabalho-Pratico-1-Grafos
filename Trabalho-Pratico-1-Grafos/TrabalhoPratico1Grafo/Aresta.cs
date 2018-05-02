@@ -19,7 +19,7 @@ namespace TrabalhoPratico1Grafo
         {
             this.v1 = valor1;
             this.v2 = valor2;
-            isLigado = true;
+            isLigado = false;
         }
 
 

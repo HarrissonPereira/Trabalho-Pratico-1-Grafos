@@ -14,7 +14,7 @@ namespace TrabalhoPratico1Grafo
             Grafo grafo;
             int executar = 1;
 
-            Console.Write("Digite a quantidade de vértices: ");
+            Console.Write("Digite a quantidade de vértices que terá o Grafo: ");
             
             grafo = new Grafo(int.Parse(Console.ReadLine()));
 
@@ -24,7 +24,7 @@ namespace TrabalhoPratico1Grafo
                 int escolha = EscolhaMenu();
                 ExecutaOpcao(ref grafo, escolha);
 
-                Console.Write("Deseja fazer mais alguma coisa? \n1 - Sim \n2 - Não \nEscolha:");
+                Console.Write("\n\n\nDeseja fazer mais alguma coisa? \n1 - Sim \n2 - Não \nEscolha:");
                 executar = int.Parse(Console.ReadLine());
 
             }
@@ -33,6 +33,8 @@ namespace TrabalhoPratico1Grafo
 
         public static int EscolhaMenu()
         {
+            Console.Clear();
+
             int escolha = 0;
             Console.WriteLine("O que deseja fazer com o grafo:");
             Console.WriteLine("1 - Ordem do Grafo");
@@ -46,8 +48,8 @@ namespace TrabalhoPratico1Grafo
             Console.WriteLine("9 - Mostrar a sequência de graus do Grafo");
             Console.WriteLine("10 - Mostrar vértices adjacentes de um determinado vértice");
             Console.WriteLine("11 - Verificar se um determinado vértice é isolado");
-            Console.WriteLine("12 - ImpSar?");
-            Console.WriteLine("13 - Par?");
+            Console.WriteLine("12 - Verificar se o vértice é par");
+            Console.WriteLine("13 - Verificar se o vértice é impar");
             Console.WriteLine("14 - Verificar se há adjacência entre 2 vértices");
             Console.Write("Escolha: ");
             return escolha = int.Parse(Console.ReadLine());
@@ -60,13 +62,9 @@ namespace TrabalhoPratico1Grafo
 
             Console.Clear();
 
-            
-            
-
             switch (escolha)
             {
                 
-
                 case 1: //Ordem
                     Console.Write("A ordem desse grafo é: "+grafo.Ordem());
                 break;
@@ -77,14 +75,8 @@ namespace TrabalhoPratico1Grafo
                     Console.Write("Vértice 1: ");
                     Vertice v1 = grafo.GetVertice(int.Parse(Console.ReadLine()));
                     Console.Write("Vértice 2: ");
-                    Vertice v2 = grafo.GetVertice(int.Parse(Console.ReadLine()));
-
-                    if(v1 != v2){
-                        grafo.InserirAresta(v1,v2);
-                    }else
-                    {
-                        Console.Write("Nesse grafo, não pode inserir arestas tipo loop.");
-                    }
+                    Vertice v2 = grafo.GetVertice(int.Parse(Console.ReadLine()));                    
+                    grafo.InserirAresta(v1,v2);                    
                     
                 break;
 
@@ -94,23 +86,19 @@ namespace TrabalhoPratico1Grafo
                     Console.Write("Vértice 1: ");
                     v1 = grafo.GetVertice(int.Parse(Console.ReadLine()));
                     Console.Write("Vértice 2: ");
-                    v2 = grafo.GetVertice(int.Parse(Console.ReadLine()));
-
-                    if (v1 != v2){
-                        grafo.RemoverAresta(v1,v2);
-                    }else
-                    {
-                        Console.Write("Nesse grafo, não há arestas em loop.");
-                    }
+                    v2 = grafo.GetVertice(int.Parse(Console.ReadLine()));                    
+                    grafo.RemoverAresta(v1,v2);
+                    
                 break;
 
                 case 4: //Grau do vértice
-                    Console.WriteLine("Escolha quais vértices deseja remover uma aresta: ");
+                    Console.WriteLine("Escolha qual vértice deseja saber o grau: ");
                     grafo.NomesVertices();
                     Console.Write("Vértice: ");
-                    int vertice = int.Parse(Console.ReadLine());
-                    
-                    grafo.Grau(vertice);
+                    Vertice vertice = grafo.GetVertice(int.Parse(Console.ReadLine()));
+
+                    Console.Write("O grau do vértice v" + vertice.Nome + " é: " + grafo.Grau(vertice));
+                                       
                 break;
 
                 case 5: //Grafo Completo
@@ -128,11 +116,11 @@ namespace TrabalhoPratico1Grafo
                 case 6: //Grafo Regular
                     if(grafo.Regular())
                     {
-                        Console.Write("O grafo está completo.");
+                        Console.Write("O grafo é regular.");
                     }
                     else
                     {
-                        Console.Write("O grafo está incompleto.");
+                        Console.Write("O grafo é irregular.");
                     }
                 break;
 
@@ -145,19 +133,22 @@ namespace TrabalhoPratico1Grafo
                 break;
 
                 case 9: //Sequência de Graus
+                    Console.WriteLine("Sequência de graus do Grafo:");
                     grafo.SequenciaGraus();
                 break;
 
                 case 10: //Vértices adjacentes de um vértice
-                    Console.WriteLine("Informe o vertice desejado: ");
-                    Vertice varadj = grafo.GetVertice(int.Parse(Console.ReadLine()));
-                    grafo.VerticesAdjacentes(varadj);
+                    Console.WriteLine("Escolha qual vértice deseja ver os vértices adjcentes: ");
+                    grafo.NomesVertices();
+                    vertice = grafo.GetVertice(int.Parse(Console.ReadLine()));
+                    grafo.VerticesAdjacentes(vertice);
                 break;
 
                 case 11: //Vertice isolado
-                    Console.WriteLine("Informa o vertice para verificação");
-                    Vertice variso = grafo.GetVertice(int.Parse(Console.ReadLine()));
-                    if (grafo.Isolado(variso))
+                    Console.WriteLine("Escolha qual vértice deseja verificar se é isolado: ");
+                    grafo.NomesVertices();
+                    vertice = grafo.GetVertice(int.Parse(Console.ReadLine()));
+                    if (grafo.Isolado(vertice))
                     {
                         Console.WriteLine("Esse vertice é Isolado.");
                     }
@@ -168,9 +159,10 @@ namespace TrabalhoPratico1Grafo
                     break;
 
                 case 12: //Par
-                    Console.WriteLine("Informe o vertice para verificação: ");
-                    Vertice varpar = grafo.GetVertice(int.Parse(Console.ReadLine()));
-                    if (grafo.Par(varpar))
+                    Console.WriteLine("Escolha qual vértice deseja verificar se é par: ");
+                    grafo.NomesVertices();
+                    vertice = grafo.GetVertice(int.Parse(Console.ReadLine()));
+                    if (grafo.Par(vertice))
                     {
                         Console.WriteLine("O vertice informado é Par.");
                     }
@@ -181,9 +173,11 @@ namespace TrabalhoPratico1Grafo
                     break;
 
                 case 13: //Impar
+                    Console.WriteLine("Escolha qual vértice deseja verificar se é impar: ");
+                    grafo.NomesVertices();
                     Console.WriteLine("Informe o vertice para verificação: ");
-                    Vertice varimpar = grafo.GetVertice(int.Parse(Console.ReadLine()));
-                    if (grafo.Impar(varimpar))
+                    vertice = grafo.GetVertice(int.Parse(Console.ReadLine()));
+                    if (grafo.Impar(vertice))
                     {
                         Console.WriteLine("O vertice informado é Impar.");
                     }
@@ -194,13 +188,15 @@ namespace TrabalhoPratico1Grafo
                 break;
 
                 case 14: //Adjacência entre 2 vértices
-                    Console.WriteLine("Informe o primeiro vertice para comparação:");
-                    Vertice adjV1 = grafo.GetVertice(int.Parse(Console.ReadLine()));
-                    Console.WriteLine("Informe o segundo verticce para comparação:");
-                    Vertice adjV2 = grafo.GetVertice(int.Parse(Console.ReadLine()));
-                    if (grafo.Adjacentes(adjV1, adjV2))
+                    Console.WriteLine("Escolha quais vértices deseja verificar se há adjacência entre eles: ");
+                    grafo.NomesVertices();
+                    Console.WriteLine("Vertice 1:");
+                    v1 = grafo.GetVertice(int.Parse(Console.ReadLine()));
+                    Console.WriteLine("Vertice 2:");
+                    v2 = grafo.GetVertice(int.Parse(Console.ReadLine()));
+                    if (grafo.Adjacentes(v1, v2))
                     {
-                        Console.WriteLine("Os veertices informados são adjacentes!");
+                        Console.WriteLine("Os vertices informados são adjacentes!");
                     }
                     else
                     {

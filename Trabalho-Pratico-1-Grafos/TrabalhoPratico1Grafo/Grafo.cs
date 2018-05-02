@@ -9,7 +9,7 @@ namespace TrabalhoPratico1Grafo
     class Grafo
     {
 
-        //private int[,] MA;
+        
         private int qtVertices;
         private Aresta[,] MA;        
         private List<Vertice> verticesDoGrafo;
@@ -28,17 +28,17 @@ namespace TrabalhoPratico1Grafo
 
             //Inicializando a MA com os vértices posicionados de forma correta
             for(int indiceY = 0; indiceY < MA.GetLength(1); indiceY++){
-                for(int indiceX = 0; indiceY < MA.GetLength(0); indiceY++){
+                for(int indiceX = 0; indiceX < MA.GetLength(0); indiceX++){
 
                     Vertice v1 = new Vertice(1);
                     Vertice v2 = new Vertice(1);
 
                     foreach(Vertice vertice in verticesDoGrafo)
-                        if(vertice.Nome == indiceY+ 1)
+                        if(vertice.Nome == indiceX+ 1)
                             v1 = vertice;
                     
                     foreach(Vertice vertice in verticesDoGrafo)
-                        if(vertice.Nome == indiceX+ 1)
+                        if(vertice.Nome == indiceY+ 1)
                             v2 = vertice;
 
                     MA[indiceX,indiceY] = new Aresta(v1, v2);
@@ -68,17 +68,31 @@ namespace TrabalhoPratico1Grafo
             if (verticesDoGrafo.Contains(v1) && verticesDoGrafo.Contains(v2)) 
             {
                 //Verifica se não há adjacência entre os vértices
-                if (!(v1.ListaAdjacencia.Contains(v2) && !(v2.ListaAdjacencia.Contains(v1)))) 
+                if (!(v1.ListaAdjacencia.Contains(v2)) && !(v2.ListaAdjacencia.Contains(v1))) 
                 {
-                    v1.ListaAdjacencia.Add(v2);
-                    v1.Grau++;
 
-                    v2.ListaAdjacencia.Add(v1);
-                    v2.Grau++;
+                    if(v1 != v2)
+                    {
+                        v1.ListaAdjacencia.Add(v2);
+                        v1.Grau++;
 
-                    MA[(v1.Nome-1),(v2.Nome-1)].SetLigado(true);
+                        v2.ListaAdjacencia.Add(v1);
+                        v2.Grau++;
 
-                    return true;
+                        MA[(v1.Nome - 1), (v2.Nome - 1)].SetLigado(true);
+                        MA[(v2.Nome - 1), (v1.Nome - 1)].SetLigado(true);
+
+                        return true;
+                    }
+                    else
+                    {
+                        Console.Write("Não é permitido inserir loops em um grafo não direcionado.");
+                    }
+                    
+                }
+                else
+                {
+                    Console.Write("Já existe uma aresta nesses dois vértices.");
                 }
 
             }
@@ -94,17 +108,32 @@ namespace TrabalhoPratico1Grafo
             if (verticesDoGrafo.Contains(v1) && verticesDoGrafo.Contains(v2))
             {
                 //Verifica se há adjacência entre os vértices
-                if ((v1.ListaAdjacencia.Contains(v2) && (v2.ListaAdjacencia.Contains(v1))))
+                if ((v1.ListaAdjacencia.Contains(v2)) && (v2.ListaAdjacencia.Contains(v1)))
                 {
-                    v1.ListaAdjacencia.Remove(v2);
-                    v1.Grau--;
 
-                    v2.ListaAdjacencia.Remove(v1);
-                    v2.Grau--;
+                    if(v1 != v2)
+                    {
+                        v1.ListaAdjacencia.Remove(v2);
+                        v1.Grau--;
 
-                    MA[(v1.Nome-1),(v2.Nome-1)].SetLigado(false);
+                        v2.ListaAdjacencia.Remove(v1);
+                        v2.Grau--;
 
-                    return true;
+                        MA[(v1.Nome - 1), (v2.Nome - 1)].SetLigado(false);
+                        MA[(v2.Nome - 1), (v1.Nome - 1)].SetLigado(false);
+
+                        return true;
+                    }
+                    else
+                    {
+                        Console.Write("Não há arestas em loops.");
+                    }
+
+                    
+                }
+                else
+                {
+                    Console.Write("Não há aresta entre esses dois vértices");
                 }
 
             }
@@ -113,17 +142,11 @@ namespace TrabalhoPratico1Grafo
         }
 
         //Retorna a quantidade de graus presente no vértice passado como parâmetro
-        public int Grau(int vertice)
+        public int Grau(Vertice vertice)
         {
 
-            foreach(Vertice item in verticesDoGrafo)
-            {
-                if(item.Nome == vertice)
-                {
-                    return item.Grau; 
-                }
-            }
-            return 0;
+            return vertice.Grau;
+            
         }
 
         //Verifica se o Grafo está com sua ligação máxima de vertices
@@ -166,17 +189,21 @@ namespace TrabalhoPratico1Grafo
         //Mostra a Matriz de Adjacência do Grafo
         public void ShowMA()
         {
+            Console.WriteLine("Matriz de Adjacência\n\n");
+
             Console.Write("\t");
 
             for(int i = 0; i < qtVertices; i++){
-                Console.Write("v" + i + 1 + "\t");
+                Console.Write("v" + (i + 1) + "\t");
             }
+
+            Console.WriteLine();
 
             for(int indiceY = 0; indiceY < MA.GetLength(1); indiceY++){
 
-                Console.Write("v" + indiceY + 1 + "\t");
+                Console.Write("v" + (indiceY + 1) + "\t");
 
-                for(int indiceX = 0; indiceY < MA.GetLength(0); indiceY++){
+                for(int indiceX = 0; indiceX < MA.GetLength(0); indiceX++){
                     if(MA[indiceX,indiceY].IsLigado()){
                         Console.Write("1\t");
                     }
@@ -193,8 +220,21 @@ namespace TrabalhoPratico1Grafo
         //Mostra a Lista de Adjacências do Grafo
         public void ShowLA()
         {
+            Console.WriteLine("Lista de Adjacência\n\n");
+
             foreach (Vertice item in verticesDoGrafo)
-                Console.Write(item.Nome + ": "+item.ListaAdjacencia);
+            {
+                if(item.ListaAdjacencia.Count != 0)
+                {
+                    Console.Write(item.Nome + ": ");
+                    foreach (Vertice adjacencia in item.ListaAdjacencia)
+                        Console.Write(adjacencia.Nome + ", ");
+
+                    Console.WriteLine();
+                }
+
+                
+            }            
 
         }
 
@@ -210,7 +250,9 @@ namespace TrabalhoPratico1Grafo
             auxGrau.Sort();
             auxGrau.Reverse();
 
-            Console.WriteLine(auxGrau);
+            foreach (int valor in auxGrau)
+                Console.Write(valor + ", ");
+
         }
 
         //Mostra os vértices adjacentes do vértice passado como parâmetro
@@ -226,7 +268,7 @@ namespace TrabalhoPratico1Grafo
         //Verifica se o vértice é isolado
         public bool Isolado(Vertice vertice)
         {
-            if (vertice.Grau != 0)
+            if (vertice.Grau == 0)
             {
                 return true;
             }
