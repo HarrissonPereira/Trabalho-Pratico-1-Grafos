@@ -281,6 +281,38 @@ namespace TrabalhoPratico1Grafo
                     Console.Write("A ordem desse grafo é: " + grafo.Ordem());
                     break;
 
+                case 2: //Inserir Vertice
+
+                    if (grafo.InserirVertice(grafo.GetNome()))
+                    {
+                        Console.Write("Vertice inserido com sucesso");
+                    }
+                    else
+                    {
+                        Console.Write("Vertice não inserido.");
+                    }
+
+                    break;
+
+                case 3: //Remover Vertce
+                    Console.WriteLine("Escolha qual vértice deseja remover: ");
+                    grafo.NomesVertices();
+
+                    Vertice vertice = grafo.GetVertice(int.Parse(Console.ReadLine()));
+
+                    if(grafo.RemoverVertice(vertice))
+                    {
+                        Console.Write("Vertice removido com sucesso");
+                    }
+                    else
+                    {
+                        Console.Write("Vertice não removido.");
+                    }
+
+                    
+
+                    break;
+
                 case 4: //Insere Aresta
                     Console.WriteLine("Escolha quais vértices deseja inserir uma aresta: ");
                     grafo.NomesVertices();

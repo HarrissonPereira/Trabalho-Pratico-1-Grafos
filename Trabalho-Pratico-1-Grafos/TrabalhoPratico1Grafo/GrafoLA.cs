@@ -33,6 +33,7 @@ namespace TrabalhoPratico1Grafo
             if (!LA.Contains(GetVertice(nome)))
             {
                 LA.Add(new Vertice(nome));
+                NomeVertice++;
                 return true;
             }
             
@@ -40,11 +41,12 @@ namespace TrabalhoPratico1Grafo
         }
 
         //RemoverVertice(Vertice vertice)
-        public bool RemoverVertice(int nome)
+        public bool RemoverVertice(Vertice vertice)
         {
-            if (LA.Contains(GetVertice(nome)))
+            if (LA.Contains(GetVertice(vertice.Nome)))
             {
-                LA.Remove(GetVertice(nome));
+                LA.Remove(GetVertice(vertice.Nome));
+                NomeVertice--;
                 return true;
             }
             return false;
@@ -292,6 +294,11 @@ namespace TrabalhoPratico1Grafo
             }
 
             return null;
+        }
+
+        public int GetNome()
+        {
+            return NomeVertice;
         }
 
     }
