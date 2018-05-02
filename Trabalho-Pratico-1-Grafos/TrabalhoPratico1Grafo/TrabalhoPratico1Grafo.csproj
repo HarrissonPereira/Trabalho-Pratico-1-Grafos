@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Aresta.cs" />
     <Compile Include="Grafo.cs" />
+    <Compile Include="GrafoLA.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vertice.cs" />

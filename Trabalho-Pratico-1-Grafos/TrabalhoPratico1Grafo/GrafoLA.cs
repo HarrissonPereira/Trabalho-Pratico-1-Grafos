@@ -11,12 +11,13 @@ namespace TrabalhoPratico1Grafo
 
         //Exercício 2
         private List<Vertice> LA;
+        private int NomeVertice;
 
         //Construtora: Inicializa a matriz de adjacência pelo tamanho nxn, onde n é a quantidade de vértices passada como parâmetro
         public GrafoLA()
         {
-            LA = new List<Vertice>();        
-
+            LA = new List<Vertice>();
+            NomeVertice = 1;
         }
 
 
@@ -27,8 +28,27 @@ namespace TrabalhoPratico1Grafo
         }
 
         //InserirVertice(Vertice vertice)
+        public bool InserirVertice(int nome)
+        {
+            if (!LA.Contains(GetVertice(nome)))
+            {
+                LA.Add(new Vertice(nome));
+                return true;
+            }
+            
+            return false;
+        }
 
         //RemoverVertice(Vertice vertice)
+        public bool RemoverVertice(int nome)
+        {
+            if (LA.Contains(GetVertice(nome)))
+            {
+                LA.Remove(GetVertice(nome));
+                return true;
+            }
+            return false;
+        }
 
         //Insere aresta entre os vértices passados como parâmetro
         public bool InserirAresta(Vertice v1, Vertice v2)
@@ -120,20 +140,18 @@ namespace TrabalhoPratico1Grafo
         //Verifica se o Grafo está com sua ligação máxima de vertices
         public bool Completo()
         {
-
             //Repensar esse aqui
 
-            //int maxArestas = (qtVertices * (qtVertices - 1)) / 2;
-            //int conjuntoGrauVertices = 0;
+            int maxArestas = (LA.Count * (LA.Count - 1)) / 2;
+            int conjuntoGrauVertices = 0;
 
-            //foreach (Vertice item in verticesDoGrafo)
-            //    conjuntoGrauVertices += item.Grau;
+            foreach (Vertice item in LA)
+                conjuntoGrauVertices += item.Grau;
 
-            //if (maxArestas == conjuntoGrauVertices)
-            //    return true;
+            if (maxArestas == conjuntoGrauVertices)
+                return true;
 
             return false;
-
 
         }
 
@@ -241,14 +259,15 @@ namespace TrabalhoPratico1Grafo
 
         //Verifica se há adjacência entre os vértices passados como parâmetro
         public bool Adjacentes(Vertice v1, Vertice v2)
-        {
-
-            //Repensar esse aqui
-
-            //if (v1 != v2)
-            //{
-            //    return (MA[v1.Nome - 1, v2.Nome - 1].IsLigado());
-            //}
+        {            
+       
+            if (v1 != v2)
+            {
+                if(v1.ListaAdjacencia.Contains(v2) && v2.ListaAdjacencia.Contains(v1))
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
